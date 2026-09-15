@@ -1,0 +1,25 @@
+{
+  "name": "StudyAgent AI · 学习中枢",
+  "short_name": "StudyAgent AI",
+  "description": "一年级至九年级智能学习助手 — 视觉作业批改 / 错题本 / 教材知识库",
+  "start_url": "/ui/",
+  "scope": "/ui/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/ui/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/ui/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

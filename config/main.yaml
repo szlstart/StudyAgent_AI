@@ -1,0 +1,64 @@
+# ============================================================
+# StudyAgent AI 主配置文件
+# ============================================================
+
+system:
+  language: zh
+  app_name: StudyAgent AI
+
+paths:
+  data_dir: ./data
+  # 教材正文放在 TextBook；向量由本机 Qdrant 持久化。
+  knowledge_bases_dir: ./TextBook
+  # 用户错题、历史与画像统一隔离在 data/users/{uuid}。
+  wrong_book_dir: ./data/users
+  user_profile_dir: ./data/users
+  exams_dir: ./data/exams
+  user_log_dir: ./data/logs
+
+logging:
+  level: INFO
+  save_to_file: true
+  console_output: true
+
+# RAG 配置（只用 raganything）
+rag:
+  provider: raganything
+  default_kb: textbook
+
+tools:
+  rag_tool:
+    kb_base_dir: ./data/knowledge_bases
+    default_kb: textbook
+  web_search:
+    enabled: true
+    provider: perplexity
+
+# 各功能模块配置
+homework:
+  # 全项目科目集合；接口会按登录年级动态收窄。
+  subjects:
+    - math       # 数学
+    - physics    # 物理
+    - chemistry  # 化学（九年级）
+    - english    # 英语
+    - chinese    # 语文
+    - history    # 历史
+    - biology    # 生物
+    - geography  # 地理
+  # 难度等级
+  difficulty_levels:
+    - easy
+    - medium
+    - hard
+    - very_hard
+
+explain:
+  # 讲解模式
+  default_length: medium      # short / medium / long
+  max_rounds: 5               # 最多追问几轮
+  use_analogy: true           # 是否使用类比
+
+quiz:
+  default_count: 5            # 默认出题数量
+  difficulty_match: same      # same / easier / harder

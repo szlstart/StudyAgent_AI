@@ -1,0 +1,57 @@
+name: studybuddy
+
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.15.4
+    ports:
+      - "127.0.0.1:6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/6333' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  everos:
+    build:
+      context: .
+      dockerfile: docker/everos/Dockerfile
+      args:
+        EVEROS_VERSION: "1.2.3"
+    environment:
+      EVEROS_ROOT: /data
+      EVEROS_API__HOST: 0.0.0.0
+      EVEROS_API__PORT: 8000
+      EVEROS_LLM__MODEL: ${LLM_MODEL}
+      EVEROS_LLM__API_KEY: ${LLM_API_KEY}
+      EVEROS_LLM__BASE_URL: ${LLM_HOST}
+      EVEROS_EMBEDDING__MODEL: ${EMBEDDING_MODEL}
+      EVEROS_EMBEDDING__API_KEY: ${EMBEDDING_API_KEY}
+      EVEROS_EMBEDDING__BASE_URL: ${EMBEDDING_HOST}
+      EVEROS_LOG_LEVEL: INFO
+      EVEROS_LOG_FORMAT: text
+      TZ: Asia/Shanghai
+    ports:
+      - "127.0.0.1:1995:8000"
+    volumes:
+      - everos_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  qdrant_data:
+    name: studybuddy_qdrant_data
+  everos_data:
+    name: studybuddy_everos_data
