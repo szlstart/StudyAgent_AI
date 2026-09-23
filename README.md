@@ -203,7 +203,7 @@ EverOS 1.2.3 当前主要提供 Episode、Atomic Fact 和 Profile 三类记忆�
 ## 项目结构
 
 ```text
-StudyAgent-AI/
+StudyAgent_AI/
 ├── src/
 │   ├── api/
 │   │   ├── main.py                 # FastAPI、中间件和路由注册
@@ -245,8 +245,8 @@ StudyAgent-AI/
 ### 2. 克隆并创建 Conda 环境
 
 ```bash
-git clone https://github.com/szlstart/StudyAgent-AI.git
-cd StudyAgent-AI
+git clone https://github.com/szlstart/StudyAgent_AI.git
+cd StudyAgent_AI
 
 /opt/miniconda3/bin/conda create -y -p /opt/miniconda3/envs/studybuddy python=3.13
 /opt/miniconda3/bin/conda activate /opt/miniconda3/envs/studybuddy
